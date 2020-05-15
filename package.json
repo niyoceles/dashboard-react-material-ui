@@ -1,0 +1,58 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run migrate && npm run seed\" \"babel-node index.js\"",
+    "dev": "NODE_ENV=development nodemon index.js --exec babel-node",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "seed": "node_modules/.bin/sequelize db:seed:all",
+    "seed:undo": "node_modules/.bin/sequelize db:seed:undo:all",
+    "migrate:undo": "node_modules/.bin/sequelize db:migrate:undo:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niyoceles/dashboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/niyoceles/dashboard/issues"
+  },
+  "homepage": "https://github.com/niyoceles/dashboard#readme",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/node": "^7.8.7",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/register": "^7.9.0",
+    "babel-node": "0.0.1-security",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "pg": "^8.0.3",
+    "pg-hstore": "^2.3.3",
+    "redis": "^3.0.2",
+    "sequelize": "^5.21.9",
+    "sequelize-cli": "^5.5.1",
+    "uuid": "^8.0.0",
+    "uuidv4": "^6.0.8"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.6",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
