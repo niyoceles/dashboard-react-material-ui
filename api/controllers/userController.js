@@ -13,12 +13,16 @@ class userController {
     } = req.body;
     if (!email) {
       return res.status(400).json({
-        error: 'email is required',
+        error: {
+          email: 'email is required'
+        },
       });
     }
     if (!password) {
       return res.status(400).json({
-        error: 'password is required',
+        error: {
+          password: 'password is required'
+        },
       });
     }
     try {
@@ -30,14 +34,18 @@ class userController {
 
       if (!checkUser) {
         return res.status(404).json({
-          error: 'user not found'
+          error: {
+            incorrect: 'Not found this user'
+          }
         });
       }
 
       const compared = Auth.comparePassword(password, checkUser.password);
       if (!compared) {
         return res.status(404).json({
-          error: 'Email and Password are not match',
+          error: {
+            incorrect: 'Email and Password are not match'
+          },
         });
       }
 

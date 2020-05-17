@@ -11,7 +11,6 @@ class starController {
       plain_orders_hidden_coordinates,
       plain_orders_hidden_id_constellation,
     } = req.body;
-    starController.checkExistStart(req, res);
     try {
       const checkStarName = await stars.findOne({
         where: {
