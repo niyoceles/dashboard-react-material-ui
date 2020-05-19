@@ -24,6 +24,13 @@ class login extends Component {
     error: {},
   };
 
+  componentDidMount() {
+    const token = localStorage.getItem('applicationToken');
+    if (token) {
+      window.location = '/dashboard';
+    }
+  }
+
   static getDerivedStateFromProps(props) {
     if (props.UI.error) {
       return { error: props.UI.error };

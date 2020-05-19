@@ -1,17 +1,17 @@
 export default {
   palette: {
     primary: {
-      light: '#33c9dc',
-      main: '#00bcd4',
-      dark: '#008394',
+      light: '#4791db',
+      main: '#1976d2',
+      dark: '#115293',
       contrastText: '#fff'
     },
     secondary: {
-      light: '#ff6333',
-      main: '#ff3d00',
-      dark: '#b22a00',
+      light: '#e33371',
+      main: '#dc004e',
+      dark: '#9a0036',
       contrastText: '#fff'
-    }
+    },
   },
   typography: {
     useNextVariants: true
@@ -58,82 +58,6 @@ export default {
       top: '6%'
     }
   },
-  spreadProfile: {
-    invisibleSeparator: {
-      border: 'none',
-      margin: 4
-    },
-    visibleSeparator: {
-      width: '100%',
-      borderBottom: '1px solid rgba(0,0,0,0.1)',
-      marginBottom: 20
-    },
-    paper: {
-      padding: 20
-    },
-    profile: {
-      '& .image-wrapper': {
-        textAlign: 'center',
-        position: 'relative',
-        '& button': {
-          position: 'absolute',
-          top: '80%',
-          left: '70%'
-        }
-      },
-      '& .profile-image': {
-        width: 150,
-        height: 150,
-        objectFit: 'cover',
-        maxWidth: '100%',
-        borderRadius: '50%'
-      },
-      '& .profile-details': {
-        textAlign: 'center',
-        '& span, svg': {
-          verticalAlign: 'middle'
-        },
-        '& a': {
-          color: '#00bcd4'
-        }
-      },
-      '& hr': {
-        border: 'none',
-        margin: '0 0 10px 0'
-      },
-      '& svg.button': {
-        '&:hover': {
-          cursor: 'pointer'
-        }
-      }
-    },
-    buttons: {
-      textAlign: 'center',
-      '& a': {
-        margin: '20px 10px'
-      }
-    }
-  },
-  spreadProfileSkeleton: {
-    username: {
-      height: 20,
-      backgroundColor: '#00bcd4',
-      width: 60,
-      margin: '0 auto 7px auto'
-    },
-    fullLine: {
-      height: 15,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      width: '100%',
-      marginBottom: 10
-    },
-    halfLine: {
-      height: 15,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      width: '50%',
-      marginBottom: 10
-    }
-  },
   postDialogStyle: {
     profileImage: {
       maxWidth: 200,
@@ -158,15 +82,4 @@ export default {
       marginBottom: 50
     }
   },
-  commentStyle: {
-    commentImage: {
-      maxWidth: '100%',
-      height: 100,
-      objectFit: 'cover',
-      borderRadius: '50%'
-    },
-    commentData: {
-      marginLeft: 20
-    }
-  }
 };

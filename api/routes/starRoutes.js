@@ -26,7 +26,7 @@ router.delete(
 );
 router.get(
   '/',
-  // checkToken,
+  checkToken,
   starController.allStars
 );
 

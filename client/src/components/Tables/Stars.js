@@ -15,18 +15,6 @@ import EditStar from '../Modals/EditStar';
 import { connect } from 'react-redux';
 
 const styles = {
-  card: {
-    position: 'relative',
-    display: 'flex',
-    marginBottom: 20,
-  },
-  image: {
-    minWidth: 200,
-  },
-  content: {
-    padding: 25,
-    objectFit: 'cover',
-  },
 };
 
 class Stars extends Component {
@@ -43,12 +31,8 @@ class Stars extends Component {
       },
       user: {
         authenticated,
-        credentials: { username },
       },
     } = this.props;
-
-    const deleteButton =
-      authenticated && username ? <DeleteStar starId={order_id} /> : null;
 
     return (
       <TableRow key={order_id}>
@@ -62,7 +46,11 @@ class Stars extends Component {
         </TableCell>
         <TableCell align='right'>{dayjs(createdAt).fromNow()}</TableCell>
         <TableCell align='right'>
-          <DeleteStar starId={order_id} />
+          <DeleteStar
+            starId={order_id}
+            starName={plain_orders_star_name}
+            starCoordinates={plain_orders_hidden_coordinates}
+          />
           <EditStar
             starId={order_id}
             starName={plain_orders_star_name}
@@ -78,7 +66,6 @@ class Stars extends Component {
 Stars.propTypes = {
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  stars: PropTypes.object.isRequired,
   openDialog: PropTypes.bool,
 };
 

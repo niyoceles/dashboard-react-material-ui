@@ -7,7 +7,6 @@ import {
 
 const initialState = {
   authenticated: false,
-  credentials: {},
 };
 
 export default function(state = initialState, action) {

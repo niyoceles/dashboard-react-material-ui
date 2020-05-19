@@ -25,7 +25,6 @@ export const loginUser = (userData, history) => dispatch => {
 };
 
 export const setAuthorization = token => {
-  console.log(token);
   const applicationToken = `Bearer ${token}`;
   localStorage.setItem('applicationToken', applicationToken);
   axios.defaults.headers.common['Authorization'] = applicationToken;

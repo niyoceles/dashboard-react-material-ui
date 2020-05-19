@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../utils/MyButton';
 // Redux stuff
 import { connect } from 'react-redux';
-import { addStar } from '../../redux/actions';
+import { updateStar, clearErrors } from '../../redux/actions';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,40 +13,33 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // Icons
-import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = {
   // ...theme.spreadProfile,
   button: {
     float: 'right',
+    color: '#fff',
+    fontSize: 14,
+    marginRight: 50,
   },
 };
 
-class EditStar extends Component {
+class AddStar extends Component {
   state = {
-    bio: '',
-    website: '',
-    location: '',
+    plain_orders_star_name: '',
+    plain_orders_hidden_coordinates: '',
+    plain_orders_hidden_id_constellation: '',
     open: false,
   };
-  mapUserDetailsToState = credentials => {
-    this.setState({
-      bio: credentials.bio ? credentials.bio : '',
-      website: credentials.website ? credentials.website : '',
-      location: credentials.location ? credentials.location : '',
-    });
-  };
+
   handleOpen = () => {
     this.setState({ open: true });
-    this.mapUserDetailsToState(this.props.credentials);
+    // this.mapUserDetailsToState(this.props.credentials);
   };
   handleClose = () => {
     this.setState({ open: false });
   };
-  componentDidMount() {
-    const { credentials } = this.props;
-    this.mapUserDetailsToState(credentials);
-  }
 
   handleChange = event => {
     this.setState({
@@ -54,12 +47,14 @@ class EditStar extends Component {
     });
   };
   handleSubmit = () => {
-    const userDetails = {
-      bio: this.state.bio,
-      website: this.state.website,
-      location: this.state.location,
+    const updatedData = {
+      plain_orders_star_name: this.state.plain_orders_star_name,
+      plain_orders_hidden_coordinates: this.state
+        .plain_orders_hidden_coordinates,
+      plain_orders_hidden_id_constellation: this.state
+        .plain_orders_hidden_id_constellation,
     };
-    this.props.addStar(userDetails);
+    this.props.updateStar(this.props.starId, updatedData);
     this.handleClose();
   };
   render() {
@@ -67,11 +62,12 @@ class EditStar extends Component {
     return (
       <Fragment>
         <MyButton
-          tip='Edit Details'
+          tip='Add Details'
           onClick={this.handleOpen}
           btnClassName={classes.button}
         >
-          <EditIcon color='primary' />
+          <AddIcon color='tertiary' />
+          Add Star
         </MyButton>
         <Dialog
           open={this.state.open}
@@ -79,38 +75,36 @@ class EditStar extends Component {
           fullWidth
           maxWidth='sm'
         >
-          <DialogTitle>Edit your details</DialogTitle>
+          <DialogTitle>Add details star</DialogTitle>
           <DialogContent>
             <form>
               <TextField
-                name='bio'
+                name='plain_orders_star_name'
                 tpye='text'
-                label='Bio'
-                multiline
-                rows='3'
-                placeholder='A short bio about yourself'
+                label='star name'
+                placeholder='edit Plain order start name'
                 className={classes.textField}
-                value={this.state.bio}
+                value={this.state.plain_orders_star_name}
                 onChange={this.handleChange}
                 fullWidth
               />
               <TextField
-                name='website'
+                name='plain_orders_hidden_coordinates'
                 tpye='text'
-                label='Website'
-                placeholder='Your personal/professinal website'
+                label='coordinates'
+                placeholder='plain orders hidden coordinates'
                 className={classes.textField}
-                value={this.state.website}
+                value={this.state.plain_orders_hidden_coordinates}
                 onChange={this.handleChange}
                 fullWidth
               />
               <TextField
-                name='location'
+                name='plain_orders_hidden_id_constellation'
                 tpye='text'
-                label='Location'
-                placeholder='Where you live'
+                label='Hidden Id constellation'
+                placeholder='plain orders hidden id constellation'
                 className={classes.textField}
-                value={this.state.location}
+                value={this.state.plain_orders_hidden_id_constellation}
                 onChange={this.handleChange}
                 fullWidth
               />
@@ -131,14 +125,13 @@ class EditStar extends Component {
 }
 
 AddStar.propTypes = {
-  addStar: PropTypes.func.isRequired,
+  updateStar: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
 };
-
 const mapStateToProps = state => ({
-  credentials: state.user.credentials,
+  UI: state.UI,
 });
 
-export default connect(mapStateToProps, { addStar })(
+export default connect(mapStateToProps, { updateStar, clearErrors })(
   withStyles(styles)(AddStar)
 );

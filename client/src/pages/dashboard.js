@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, withStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,6 +16,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
 import Stars from '../components/Tables/Stars';
+import NavBar from '../layout/NavBar';
 import axios from 'axios';
 
 const useStyles1 = makeStyles(theme => ({
@@ -96,10 +97,29 @@ TablePaginationActions.propTypes = {
 };
 
 const useStyles2 = makeStyles({
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 700,
+  },
   table: {
     minWidth: 500,
   },
+  dashboard: {
+    marginTop: 70,
+  },
 });
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 export default function CustomPaginationActionsTable() {
   const classes = useStyles2();
@@ -115,6 +135,10 @@ export default function CustomPaginationActionsTable() {
 
   useEffect(() => {
     fetchStars(stars);
+    const token = localStorage.getItem('applicationToken');
+    if (!token) {
+      window.location = '/';
+    } 
   }, [stars]);
 
   const emptyRows =
@@ -130,52 +154,64 @@ export default function CustomPaginationActionsTable() {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label='custom pagination table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Plain orders star name</TableCell>
-            <TableCell align='right'>plain orders hidden coordinates</TableCell>
-            <TableCell align='right'>
-              plain_orders_hidden_id_constellation
-            </TableCell>
-            <TableCell align='right'>Created Date</TableCell>
-            <TableCell align='right'>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? stars.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : stars
-          ).map((star) => (
-            <Stars key={star.order_id} star={star} />
-          ))}
+    <Fragment>
+      <NavBar />
+      <div className={classes.dashboard}>
+      <Paper className={classes.root}>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Plain orders star name</StyledTableCell>
+                <StyledTableCell align='right'>
+                  plain orders hidden coordinates
+                </StyledTableCell>
+                <StyledTableCell align='right'>
+                  plain orders hidden id constellation
+                </StyledTableCell>
+                <StyledTableCell align='right'>Created Date</StyledTableCell>
+                <StyledTableCell align='right'>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? stars.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : stars
+              ).map(star => (
+                <Stars key={star.order_id} star={star} />
+              ))}
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={stars.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: { 'aria-label': 'rows per page' },
-                native: true,
-              }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  colSpan={3}
+                  count={stars.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'rows per page' },
+                    native: true,
+                  }}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Paper>
+      </div>
+    </Fragment>
   );
 }
