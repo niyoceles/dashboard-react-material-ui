@@ -1,6 +1,4 @@
 import {
-  SET_STARS,
-  LOADING_DATA,
   DELETE_STAR,
   POST_STAR,
   SET_STAR,
@@ -14,17 +12,6 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case LOADING_DATA:
-      return {
-        ...state,
-        loading: true
-      };
-    case SET_STARS:
-      return {
-        ...state,
-        stars: action.payload,
-        loading: false
-      };
     case SET_STAR:
       return {
         ...state,

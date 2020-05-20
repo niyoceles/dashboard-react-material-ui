@@ -1,22 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MyButton from '../utils/MyButton';
 import AddStar from '../components/Modals/AddStar';
-// import Notifications from './Notifications';
 // MUI stuff
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 import { logoutUser } from '../redux/actions';
-// Icons
-import HomeIcon from '@material-ui/icons/Home';
 
 const styles = {
   root: {
@@ -41,7 +35,7 @@ class Navbar extends Component {
   };
 
   render() {
-    const { authenticated, classes } = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <AppBar>
@@ -57,9 +51,7 @@ class Navbar extends Component {
             <Typography variant='h6' className={classes.title}>
               Company name
             </Typography>
-            <Button color='inherit'>
-              <AddStar />
-            </Button>
+            <AddStar />
             <MyButton
               tip='Logout'
               btnClassName={classes.button}

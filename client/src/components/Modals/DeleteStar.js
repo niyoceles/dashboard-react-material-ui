@@ -17,7 +17,7 @@ import { deleteStar } from '../../redux/actions';
 
 const styles = {
   deleteButton: {
-    // position: 'absolute',
+    float: 'right',
   },
 };
 
@@ -55,12 +55,10 @@ class DeleteStar extends Component {
           fullWidth
           maxWidth='sm'
         >
-          <DialogTitle>
-            Are you sure you want to delete this star?
-          </DialogTitle>
+          <DialogTitle>Are you sure you want to delete this star?</DialogTitle>
           <DialogContent>
             <DialogContentText id='alert-dialog-description'>
-              Star name: {this.props.starName} <br/>
+              Star name: {this.props.starName} <br />
               Star Coordinates:{this.props.starCoordinates}
             </DialogContentText>
           </DialogContent>

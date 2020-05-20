@@ -14,14 +14,12 @@ import EditStar from '../Modals/EditStar';
 // import StarDialog from './StarDialog';
 import { connect } from 'react-redux';
 
-const styles = {
-};
+const styles = {};
 
 class Stars extends Component {
   render() {
     dayjs.extend(relativeTime);
     const {
-      classes,
       star: {
         order_id,
         plain_orders_star_name,
@@ -29,23 +27,20 @@ class Stars extends Component {
         plain_orders_hidden_id_constellation,
         createdAt,
       },
-      user: {
-        authenticated,
-      },
     } = this.props;
 
     return (
       <TableRow key={order_id}>
-        <TableCell component='th' scope='row'>
+        <TableCell component='th' scope='row' size='small'>
           {plain_orders_star_name}
         </TableCell>
 
-        <TableCell align='right'>{plain_orders_hidden_coordinates}</TableCell>
-        <TableCell align='right'>
+        <TableCell align='right' size='small'>{plain_orders_hidden_coordinates}</TableCell>
+        <TableCell align='right' size='small'>
           {plain_orders_hidden_id_constellation}
         </TableCell>
-        <TableCell align='right'>{dayjs(createdAt).fromNow()}</TableCell>
-        <TableCell align='right'>
+        <TableCell align='right' size='small'>{dayjs(createdAt).fromNow()}</TableCell>
+        <TableCell align='right' size='small'>
           <DeleteStar
             starId={order_id}
             starName={plain_orders_star_name}
@@ -65,7 +60,6 @@ class Stars extends Component {
 
 Stars.propTypes = {
   user: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
   openDialog: PropTypes.bool,
 };
 
