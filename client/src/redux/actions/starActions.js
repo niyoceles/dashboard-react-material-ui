@@ -21,10 +21,9 @@ export const addStar = newStar => dispatch => {
       dispatch(clearErrors());
     })
     .catch(err => {
-      console.log(err.response.data);
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data.errors,
+        payload: err.response.data.error,
       });
     });
 };
@@ -34,7 +33,6 @@ export const updateStar = (starId, updateData) => dispatch => {
   axios
     .put(`http://localhost:3000/api/star/${starId}`, updateData)
     .then(res => {
-      console.log('message:', res.data);
       dispatch({
         type: POST_STAR,
         payload: res.data,
@@ -42,10 +40,9 @@ export const updateStar = (starId, updateData) => dispatch => {
       dispatch(clearErrors());
     })
     .catch(err => {
-      console.log('erro:', err.response.data);
       dispatch({
         type: SET_ERRORS,
-        payload: err.response.data.errors,
+        payload: err.response.data.error,
       });
     });
 };

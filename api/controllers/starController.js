@@ -30,15 +30,21 @@ class starController {
 
       if (checkStarName) {
         return res.status(400).json({
-          error: 'this star name  already Exist',
+          error: {
+            starName: 'this star name  already Exist'
+          },
         });
       } if (checkStarCoordinates) {
         return res.status(400).json({
-          error: 'this Coordinates already Exist',
+          error: {
+            startCoordinates: 'this Coordinates already Exist',
+          }
         });
       } if (checkStarIdConstellation) {
         return res.status(400).json({
-          error: 'this Start Id Constellation already Exist',
+          error: {
+            idConstellation: 'this Start Id Constellation already Exist'
+          },
         });
       }
       const newStar = await stars.create({

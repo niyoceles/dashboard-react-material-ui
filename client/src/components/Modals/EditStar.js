@@ -32,7 +32,6 @@ class EditStar extends Component {
 
   handleOpen = () => {
     this.setState({ open: true });
-    // this.mapUserDetailsToState(this.props.credentials);
   };
   handleClose = () => {
     this.setState({ open: false });
@@ -157,7 +156,7 @@ class EditStar extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleClose} color='secondary'>
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color='primary'>

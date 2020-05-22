@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../utils/MyButton';
 // Redux stuff
 import { connect } from 'react-redux';
-import { addStar } from '../../redux/actions';
+import { addStar, clearErrors } from '../../redux/actions';
 import Validator from '../../utils/inputValidation';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
@@ -17,7 +17,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
 
 const styles = {
-  // ...theme.spreadProfile,
   button: {
     float: 'right',
     color: '#fff',
@@ -35,18 +34,40 @@ class AddStar extends Component {
     starCoordinatesError: '',
     starConstellationError: '',
     open: false,
+    error: {},
   };
+
+  static getDerivedStateFromProps(props) {
+    if (props.UI.error) {
+      return { error: props.UI.error };
+    }
+  }
 
   handleOpen = () => {
     this.setState({ open: true });
   };
   handleClose = () => {
-    this.setState({ open: false });
+    this.props.clearErrors();
+    this.setState({
+      open: false,
+      error: {},
+      plain_orders_star_name: '',
+      plain_orders_hidden_coordinates: '',
+      plain_orders_hidden_id_constellation: '',
+      starNameError: '',
+      starCoordinatesError: '',
+      starConstellationError: '',
+    });
   };
 
   handleChange = event => {
+    this.props.clearErrors();
     this.setState({
       [event.target.name]: event.target.value,
+      error: {},
+      starNameError: '',
+      starCoordinatesError: '',
+      starConstellationError: '',
     });
   };
 
@@ -57,7 +78,7 @@ class AddStar extends Component {
       plain_orders_hidden_id_constellation,
     } = this.state;
 
-    this.clearErrors();
+    this.clearValidationErrors();
     const starNameError = Validator.validateStarName({
       plain_orders_star_name,
     });
@@ -87,19 +108,30 @@ class AddStar extends Component {
     };
 
     this.props.addStar(addStarData);
-    this.handleClose();
+    setTimeout(() => {
+      if (
+        !(
+          this.state.error.starName ||
+          this.state.error.startCoordinates ||
+          this.state.error.idConstellation
+        )
+      ) {
+        this.handleClose();
+      }
+    }, 1000);
   };
 
   displayError = (error, key) => {
     this.setState({ [key]: error });
   };
 
-  clearErrors = () =>
+  clearValidationErrors = () =>
     this.setState(prevState => ({
       ...prevState,
       starNameError: '',
       starCoordinatesError: '',
       starConstellationError: '',
+      error: {},
     }));
 
   render() {
@@ -112,7 +144,9 @@ class AddStar extends Component {
       starCoordinatesError,
       starConstellationError,
       open,
+      error: { starName, startCoordinates, idConstellation },
     } = this.state;
+
     return (
       <Fragment>
         <MyButton
@@ -133,8 +167,8 @@ class AddStar extends Component {
                 tpye='text'
                 label='star name'
                 placeholder='add Plain order start name'
-                helperText={starNameError}
-                error={starNameError ? true : false}
+                helperText={starNameError || starName}
+                error={starNameError || starName ? true : false}
                 className={classes.textField}
                 value={plain_orders_star_name}
                 onChange={this.handleChange}
@@ -145,8 +179,8 @@ class AddStar extends Component {
                 tpye='text'
                 label='coordinates'
                 placeholder='plain orders hidden coordinates'
-                helperText={starCoordinatesError}
-                error={starCoordinatesError ? true : false}
+                helperText={starCoordinatesError || startCoordinates}
+                error={starCoordinatesError || startCoordinates ? true : false}
                 className={classes.textField}
                 value={plain_orders_hidden_coordinates}
                 onChange={this.handleChange}
@@ -157,8 +191,8 @@ class AddStar extends Component {
                 tpye='text'
                 label='Hidden Id constellation'
                 placeholder='plain orders hidden id constellation'
-                helperText={starConstellationError}
-                error={starConstellationError ? true : false}
+                helperText={starConstellationError || idConstellation}
+                error={starConstellationError || idConstellation ? true : false}
                 className={classes.textField}
                 value={plain_orders_hidden_id_constellation}
                 onChange={this.handleChange}
@@ -167,7 +201,7 @@ class AddStar extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color='primary'>
+            <Button onClick={this.handleClose} color='secondary'>
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color='primary'>
@@ -182,12 +216,14 @@ class AddStar extends Component {
 
 AddStar.propTypes = {
   addStar: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
   UI: state.UI,
 });
 
-export default connect(mapStateToProps, { addStar })(
+export default connect(mapStateToProps, { addStar, clearErrors })(
   withStyles(styles)(AddStar)
 );
